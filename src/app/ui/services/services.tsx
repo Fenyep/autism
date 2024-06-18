@@ -3,27 +3,15 @@ import {
   GlobeIcon,
   LanguagesIcon,
   MapPinIcon,
-  NotebookIcon,
   NotebookPenIcon,
 } from "lucide-react";
 import Reveal from "../reveal";
-import SectionHeader from "../section-header";
 import ServiceCard from "../service-card";
 
 export default function Services() {
   return (
     <Reveal>
       <section id="services" className="w-full px-4 mt-20 text-lg font-semibold">
-        <Reveal>
-          <SectionHeader
-            title="Our Services ?"
-            subtitle="Delivering top-notch linguistic services."
-            subtitle2="At the WordsGeeks, we are passionate about language and dedicated to
-              delivering top-notch linguistic services tailored to your needs. With a
-              diverse range of offerings, we specialise in:"
-          />
-        </Reveal>
-
         <div className="mx-auto flex flex-wrap max-w-[1400px] place-content-center items-center mt-16">
           <ServiceCard
             title="Translation and Interpretation"
