@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head />
       <body className={"min-h-screen bg-background font-sans antialiased"}>
-        <main className={cn(inter.className, "relative h-screen overflow-y-hidden")}>
+        <main className={cn(inter.className, "relative h-screen overflow-y-auto")}>
           {/* <Nav /> */}
           <ModalProvider>
             {children}
