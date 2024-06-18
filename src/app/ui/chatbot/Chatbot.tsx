@@ -12,6 +12,8 @@ import {
   CardHeader,
   CardTitle,
 } from "src/components/ui/card";
+import { inter } from "../fonts";
+import { cn } from "src/lib/utils";
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -101,7 +103,7 @@ export default function Chatbot() {
     //     </form>
     //   </CardFooter>
     // </Card>
-    <Card className="relative w-full mx-auto">
+    <Card className={cn(inter.className, "relative w-full mx-auto")}>
       <CardHeader>
         <CardTitle className="font-inter">
           Agent conversationnel sur l&apos;autisme

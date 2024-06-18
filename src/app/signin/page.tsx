@@ -1,14 +1,14 @@
 import { Label } from "src/components/ui/label";
-import { LoginForm } from "../ui/signin/LoginForm";
 import { Input } from "src/components/ui/input";
 import Link from "next/link";
 import { Button } from "src/components/ui/button";
+import img from "../../../public/images/scene-realiste-jeunes-enfants-autistes-qui-jouent.jpg";
 import Image from "next/image";
 
 export default function Login() {
   return (
     <div className="w-full h-full lg:grid lg:grid-cols-2">
-      <div className="flex items-center justify-center ">
+      <div className="flex items-center justify-center">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
             <h1 className="text-3xl font-bold">Login</h1>
@@ -47,7 +47,7 @@ export default function Login() {
       </div>
       <div className="hidden bg-muted lg:block">
         <Image
-          src="/medium-shot-woman-working-travel-agency.jpg"
+          src={img}
           alt="Image"
           width="1920"
           height="1080"

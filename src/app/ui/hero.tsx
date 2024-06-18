@@ -9,6 +9,10 @@ import {
 import Image from "next/image";
 import React from "react";
 
+import img from "../../../public/images/garcon-faisant-seance-ergotherapie.jpg";
+import img2 from "../../../public/images/front-view-smiley-girl-making-puzzle.jpg";
+import img3 from "../../../public/images/vue-laterale-homme-garcon-lisant-bandes-dessinees-maison.jpg";
+
 export default function Hero() {
   return (
     <section className="w-full">
@@ -25,7 +29,7 @@ export default function Hero() {
             <CarouselItem>
               <div className="relative overflow-hidden rounded-lg">
                 <Image
-                  src="/placeholder.svg"
+                  src={img}
                   width={1200}
                   height={600}
                   alt="Hero Image 1"
@@ -45,7 +49,7 @@ export default function Hero() {
             <CarouselItem>
               <div className="relative overflow-hidden rounded-lg">
                 <Image
-                  src="/placeholder.svg"
+                  src={img2}
                   width={1200}
                   height={600}
                   alt="Hero Image 2"
@@ -66,7 +70,7 @@ export default function Hero() {
             <CarouselItem>
               <div className="relative overflow-hidden rounded-lg">
                 <Image
-                  src="/placeholder.svg"
+                  src={img3}
                   width={1200}
                   height={600}
                   alt="Hero Image 3"

@@ -6,20 +6,11 @@ import {
   CarouselPrevious,
 } from "src/components/ui/carousel";
 import Reveal from "./reveal";
-import SectionHeader from "./section-header";
 import TestimonialCard from "./testimonial-card";
 
 export default function Testimonials() {
   return (
     <section id="testimonials" className="w-full px-4 py-4 my-24">
-      <Reveal variant="to-bottom">
-        <SectionHeader
-          title="What they think ?"
-          subtitle="What our clients says about us"
-          subtitle2="Your Trusted Partner in Localizing Content and Communicating Across Languages"
-        />
-      </Reveal>
-
       <main className="mt-12 mx-auto w-[80%]">
         <Carousel className="w-full">
           <CarouselContent>

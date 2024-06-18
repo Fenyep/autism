@@ -1,5 +1,4 @@
 import Image from "next/image";
-import SectionHeader from "../section-header";
 import Reveal from "../reveal";
 import img from "../../../../public/images/medium-shot-woman-working-travel-agency.jpg";
 
@@ -7,14 +6,6 @@ export default function AboutUs() {
   return (
     <Reveal>
       <div className="w-full mt-16 mb-8 px-4 pt-4 text-lg font-semibold">
-        <Reveal>
-          <SectionHeader
-            title="Who we are ?"
-            subtitle="Trusted Partner in Localizing Content"
-            subtitle2="Your Trusted Partner in Localizing Content and Communicating Across Languages"
-          />
-        </Reveal>
-
         <article className="mt-24 w-[80%] lg:w-[75%] xl:w-[65%] 2xl:w[50%] mx-auto flex flex-col md:flex-row gap-8 xl:gap-16">
           <div className="w-full md:w-1/3 flex justify-end">
             <Reveal variant="to-left">
