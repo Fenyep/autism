@@ -69,8 +69,8 @@ export default function Chatbot() {
         </CardTitle>
         <CardDescription>Que puis-je faire pour vous ?</CardDescription>
       </CardHeader>
-      <CardContent className="sm:max-w-[425px] h-[364px] overflow-x-hidden overflow-y-auto !px-4 !pb-0">
-        <div className="grid gap-4 pt-4">
+      <CardContent className="sm:max-w-[425px] h-[364px] overflow-x-auto overflow-y-auto !px-4 !pb-0">
+        <div className="flex flex-col gap-4 pt-4 w-full">
           <MessageBubble
             owner="them"
             message={

@@ -125,7 +125,7 @@ export default function Home() {
           align="end"
           sideOffset={10}
           side="top"
-          className="max-h-[600px] w-[400px] overflow-auto"
+          className="max-h-[600px] w-[400px] overflow-hidden"
         >
           <Chatbot />
         </PopoverContent>
