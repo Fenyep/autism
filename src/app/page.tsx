@@ -109,8 +109,8 @@ export default function Home() {
           </Button>
         </div>
       </header>
-      <Hero />
-      <Partners />
+      {/* <Hero />
+      <Partners /> */}
       <Actualities />
       <Popover>
         <PopoverTrigger

@@ -1,9 +1,8 @@
 "use client";
 
 import { Button } from "src/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "src/components/ui/avatar";
 import { Input } from "src/components/ui/input";
-import React, { useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import {
   Card,
   CardContent,
@@ -14,95 +13,55 @@ import {
 } from "src/components/ui/card";
 import { inter } from "../fonts";
 import { cn } from "src/lib/utils";
+import MessageBubble from "./MessageBubble";
+import Message from "src/entities/Message";
+import { SendIcon } from "../Icons/Icons";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem } from "src/components/ui/form";
 
 export default function Chatbot() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessage] = useState<Message[]>([]);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const MessageFormSchema = z.object({
+    message: z.string().min(1),
+  });
+
+  const form = useForm<z.infer<typeof MessageFormSchema>>({
+    resolver: zodResolver(MessageFormSchema),
+    defaultValues: {
+      message: "",
+    },
+  });
+
+  const addMessage = (message: Message) => {
+    setMessage([...messages, message]);
+  };
+
+  const onSubmit = (values: z.infer<typeof MessageFormSchema>) => {
+    addMessage(
+      new Message({
+        content: values.message,
+        date: new Date(),
+      })
+    );
+    form.reset();
+  };
+
+  // Scroll to bottom when component mounts or when messages change
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
-    // <Card className="relative h-full w-full max-w-md mx-auto">
-    //   <CardHeader>
-    //     <CardTitle>Chat with Support</CardTitle>
-    //     <CardDescription>
-    //       Speak with a support agent to get your questions answered.
-    //     </CardDescription>
-    //   </CardHeader>
-    //   <CardContent
-    //     className={`grid gap-4 py-4 transition-all duration-300 ${
-    //       isOpen ? "opacity-100 visible" : "opacity-0 invisible"
-    //     }`}
-    //   >
-    //     {/* <div className="grid items-center grid-cols-[auto_1fr] gap-4">
-    //       <Avatar className="border w-10 h-10">
-    //         <AvatarImage src="/placeholder-user.jpg" />
-    //         <AvatarFallback>AJ</AvatarFallback>
-    //       </Avatar>
-    //       <div className="grid gap-1">
-    //         <p className="font-medium text-sm text-gray-500 leading-none dark:text-gray-400">
-    //           Alex Johnson (Support) &middot; 2:40pm
-    //         </p>
-    //         <p>Hi, how can I assist you today?</p>
-    //       </div>
-    //     </div>
-    //     <div className="grid items-center grid-cols-[1fr_auto] gap-4">
-    //       <div className="grid gap-1">
-    //         <p className="font-medium text-sm text-gray-500 leading-none dark:text-gray-400">
-    //           You &middot; 2:41pm
-    //         </p>
-    //         <p>My order hasn&apos;t arrived yet. Can you help me?</p>
-    //       </div>
-    //       <Avatar className="border w-10 h-10">
-    //         <AvatarImage src="/placeholder-user.jpg" />
-    //         <AvatarFallback>MG</AvatarFallback>
-    //       </Avatar>
-    //     </div>
-    //     <div className="grid items-center grid-cols-[auto_1fr] gap-4">
-    //       <Avatar className="border w-10 h-10">
-    //         <AvatarImage src="/placeholder-user.jpg" />
-    //         <AvatarFallback>AJ</AvatarFallback>
-    //       </Avatar>
-    //       <div className="grid gap-1">
-    //         <p className="font-medium text-sm text-gray-500 leading-none dark:text-gray-400">
-    //           Alex Johnson (Support) &middot; 2:42pm
-    //         </p>
-    //         <p>
-    //           Okay, let me look into that for you. What&apos;s your order number?
-    //         </p>
-    //       </div>
-    //     </div>
-    //     <div className="grid items-center grid-cols-[1fr_auto] gap-4">
-    //       <div className="grid gap-1">
-    //         <p className="font-medium text-sm text-gray-500 leading-none dark:text-gray-400">
-    //           You &middot; 2:43pm
-    //         </p>
-    //         <p>The order number is #123456789.</p>
-    //       </div>
-    //       <Avatar className="border w-10 h-10">
-    //         <AvatarImage src="/placeholder-user.jpg" />
-    //         <AvatarFallback>MG</AvatarFallback>
-    //       </Avatar>
-    //     </div> */}
-    //   </CardContent>
-    //   <CardFooter>
-    //     <form className="flex items-center w-full space-x-2">
-    //       <Input
-    //         id="message"
-    //         placeholder="Type your message..."
-    //         className="flex-1"
-    //         autoComplete="off"
-    //       />
-    //       <Button
-    //         type="submit"
-    //         size="icon"
-    //         onClick={(e) => {
-    //           e.preventDefault();
-    //           setIsOpen(!isOpen);
-    //         }}
-    //       >
-    //         <SendIcon className="w-4 h-4" />
-    //         <span className="sr-only">{isOpen ? "Close" : "Send"}</span>
-    //       </Button>
-    //     </form>
-    //   </CardFooter>
-    // </Card>
     <Card className={cn(inter.className, "relative w-full mx-auto")}>
       <CardHeader>
         <CardTitle className="font-inter">
@@ -110,85 +69,65 @@ export default function Chatbot() {
         </CardTitle>
         <CardDescription>Que puis-je faire pour vous ?</CardDescription>
       </CardHeader>
-      <CardContent className="sm:max-w-[425px] h-[364px] overflow-auto ">
-        <div className="grid gap-4 py-4">
-          <AiMessage />
-          <UserMessage />
+      <CardContent className="sm:max-w-[425px] h-[364px] overflow-auto !px-4 !pb-0">
+        <div className="grid gap-4 pt-4">
+          <MessageBubble
+            owner="them"
+            message={
+              new Message({
+                content: "Hi, how can I assist you today?",
+                date: new Date(),
+              })
+            }
+          />
+          <MessageBubble
+            owner="me"
+            message={
+              new Message({
+                content: "Hi, how can I assist you today?",
+                date: new Date(),
+              })
+            }
+          />
+          {messages.map((message, index) => (
+            <Fragment key={index}>
+              <MessageBubble owner={"me"} message={message} />
+            </Fragment>
+          ))}
+
+          <div ref={messagesEndRef} />
         </div>
       </CardContent>
       <CardFooter>
-        <form className="flex items-center w-full mt-4 space-x-2">
-          <Input
-            id="message"
-            placeholder="Type your message..."
-            className="flex-1"
-            autoComplete="off"
-          />
-          <Button type="submit" size="icon">
-            <SendIcon className="w-4 h-4" />
-            <span className="sr-only">Send</span>
-          </Button>
-        </form>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex items-center w-full mt-4 space-x-2"
+          >
+            <FormField
+              name="message"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormControl>
+                    <Input
+                      id="message"
+                      placeholder="Type your message..."
+                      className="flex-1"
+                      autoComplete="off"
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <Button type="submit" size="icon">
+              <SendIcon className="w-4 h-4" />
+              <span className="sr-only">Send</span>
+            </Button>
+          </form>
+        </Form>
       </CardFooter>
     </Card>
   );
 }
-
-const SendIcon = React.forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement>>(
-  ({ ...props }, ref) => {
-    return (
-      <svg
-        {...props}
-        ref={ref}
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="m22 2-7 20-4-9-9-4Z" />
-        <path d="M22 2 11 13" />
-      </svg>
-    );
-  }
-);
-
-SendIcon.displayName = "SendIcon";
-
-const AiMessage = () => {
-  return (
-    <div className="grid items-center grid-cols-[auto_1fr] gap-4">
-      <Avatar className="border w-10 h-10">
-        <AvatarImage src="/placeholder-user.jpg" />
-        <AvatarFallback>AJ</AvatarFallback>
-      </Avatar>
-      <div className="grid gap-1 bg-gray-100 p-3 rounded-lg dark:bg-gray-800">
-        <p className="font-medium text-sm text-gray-500 leading-none dark:text-gray-400">
-          Alex Johnson (Support) &middot; 2:40pm
-        </p>
-        <p>Hi, how can I assist you today?</p>
-      </div>
-    </div>
-  );
-};
-
-const UserMessage = () => {
-  return (
-    <div className="grid items-center grid-cols-[1fr_auto] gap-4">
-      <div className="grid gap-1 bg-gray-100 p-3 rounded-lg dark:bg-gray-800">
-        <p className="font-medium text-sm text-gray-500 leading-none dark:text-gray-400">
-          Alex Johnson (Support) &middot; 2:40pm
-        </p>
-        <p>Hi, how can I assist you today?</p>
-      </div>
-      <Avatar className="border w-10 h-10">
-        <AvatarImage src="/placeholder-user.jpg" />
-        <AvatarFallback>MG</AvatarFallback>
-      </Avatar>
-    </div>
-  );
-};
