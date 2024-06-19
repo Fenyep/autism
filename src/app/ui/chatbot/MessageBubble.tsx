@@ -10,7 +10,7 @@ type MessageProps = {
 
 export default function MessageBubble({ owner, message }: MessageProps) {
   return (
-    <Reveal variant="to-top">
+    <Reveal variant={owner === "me" ? "to-left" : "to-right"}>
       <div className="flex items-center gap-4 w-full">
         {owner === "them" ? (
           <>
